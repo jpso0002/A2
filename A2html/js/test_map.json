@@ -1,0 +1,11 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 900,
+  "height": 650,
+  "projection": {"type": "mercator"},
+  "data": {
+    "url": "js/sa4_2021.topojson",
+    "format": { "type": "topojson", "feature": "SA4_2021_AUST_GDA2020" }
+  },
+  "mark": {"type": "geoshape", "stroke": "#444", "fill": "#ddd"}
+}
