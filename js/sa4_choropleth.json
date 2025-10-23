@@ -1,16 +1,9 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Net migration per SA4 (per 1,000), Australia",
+  "title": "Australia Net Internal Migration per Region (per 1,000)",
   "width": 900,
   "height": 650,
   "projection": {"type": "mercator"},
-  "params": [
-    {
-      "name": "YearSel",
-      "value": 2023,
-      "bind": {"input": "select", "options": [2017,2018,2019,2020,2021,2022,2023,2024], "name": "Year: "}
-    }
-  ],
   "data": {
     "url": "js/sa4_2021.topojson",
     "format": {"type": "topojson", "feature": "SA4_2021_AUST_GDA2020"}
@@ -24,9 +17,8 @@
         "fields": ["year","net_migration","population","SA4_NAME21"]
       }
     },
-    {"filter": "datum.year == YearSel"},
     {
-      "calculate": "isValid(datum.population) && datum.population>0 ? (datum.net_migration / datum.population) * 1000 : null",
+      "calculate": "(datum.net_migration / datum.population) * 1000",
       "as": "net_per_1000"
     }
   ],
@@ -35,7 +27,7 @@
     "color": {
       "field": "net_per_1000",
       "type": "quantitative",
-      "title": "Net migration per 1,000",
+      "title": "Net internal migration per 1,000",
       "scale": {
         "type": "threshold",
         "domain": [-10, -5, -1, 1, 5, 10],
@@ -43,8 +35,7 @@
       }
     },
     "tooltip": [
-      {"field": "properties.SA4_NAME21", "title": "SA4"},
-      {"field": "year", "type": "ordinal"},
+      {"field": "properties.SA4_NAME21", "title": "Region"},
       {"field": "net_migration", "title": "Net migration", "format": ","},
       {"field": "population", "title": "Population", "format": ","},
       {"field": "net_per_1000", "title": "Per 1,000", "format": ".2f"}
