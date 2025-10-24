@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Australian Migration Flows by SA4 (2024)</title>
+
+  <!-- Vega stack -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+  <!-- Your external stylesheet (optional to expand later) -->
+  <link rel="stylesheet" href="css/styles.css"/>
+</head>
+<body>
+  <header class="container">
+    <h1>Australian Migration Flows by SA4 (2024)</h1>
+    <p class="sub">Internal vs. overseas migration patterns across Statistical Areas Level 4 (SA4)</p>
+  </header>
+
+  <!-- Overview -->
+  <section class="container">
+    <div class="card">
+      <h2>Overview</h2>
+      <p class="muted placeholder">
+        Placeholder: Brief introduction to migration in Australia, what Net Internal Migration (NIM) and Net Overseas Migration (NOM) mean, and what this project explores.
+        Add 3–5 sentences here framing the questions your visuals will answer.
+      </p>
+    </div>
+  </section>
+
+  <!-- NIM Choropleth (Full width) -->
+  <section class="container">
+    <h2>Net Internal Migration (NIM) — SA4 (2024)</h2>
+    <div id="nim-choropleth" class="chart full"></div>
+    <div class="card" style="margin-top: var(--gap);">
+      <h3>About this map</h3>
+      <div class="twocol">
+        <p class="muted placeholder">
+          Placeholder column 1: Explain how to read the choropleth (scale, units, time frame, SA4 boundaries), note data source and any filters/assumptions.
+        </p>
+        <p class="muted placeholder">
+          Placeholder column 2: Key insights you expect (e.g., growth corridors, inter-state patterns), caveats, and what viewers should compare with the NOM map below.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOM Choropleth (Full width) -->
+  <section class="container">
+    <h2>Net Overseas Migration (NOM) — SA4 (2024)</h2>
+    <div id="nom-choropleth" class="chart full"></div>
+    <div class="card" style="margin-top: var(--gap);">
+      <h3>About this map</h3>
+      <div class="twocol">
+        <p class="muted placeholder">
+          Placeholder column 1: Define NOM, explain geographic concentrations (capitals, student hubs), and the legend/scale.
+        </p>
+        <p class="muted placeholder">
+          Placeholder column 2: Contrast with NIM patterns and flag regions where internal vs overseas drivers diverge.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Toggle Bar Chart: Top 6 NIM / NOM -->
+  <section class="container">
+    <h2>Top 6 Regions by Migration (Toggle NIM / NOM)</h2>
+    <div class="controls">
+      <label><input type="radio" name="metricToggle" value="NIM" checked> Show Top 6 NIM</label>
+      <label><input type="radio" name="metricToggle" value="NOM"> Show Top 6 NOM</label>
+      <span class="muted placeholder">Toggle will switch the bar chart between NIM and NOM.</span>
+    </div>
+    <div class="split">
+      <div id="top6-bar" class="chart"></div>
+      <div class="card">
+        <h3>Interpretation</h3>
+        <p class="muted placeholder">
+          Placeholder: Summarize which regions appear in the top 6 for each metric and why. Mention urban vs regional dynamics, student inflows, housing, or employment hubs.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Total Migration (NIM + NOM) -->
+  <section class="container">
+    <h2>Total Migration (NIM + NOM) — Highest Regions Overall</h2>
+    <div class="split">
+      <div id="total-migration-chart" class="chart"></div>
+      <div class="card">
+        <h3>What “Total” Shows</h3>
+        <p class="muted placeholder">
+          Placeholder: Explain combining NIM and NOM to show overall net migration pressure. Note methodological choices (same year, additive approach, handling negatives), and call out standout SA4s.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sources -->
+  <footer class="container">
+    <h2>Sources</h2>
+    <div class="sources">
+      <div class="card">
+        <h3>Data Source 1</h3>
+        <p class="muted placeholder">Placeholder: ABS / Home Affairs / Centre for Population dataset details, years, and download link.</p>
+      </div>
+      <div class="card">
+        <h3>Data Source 2</h3>
+        <p class="muted placeholder">Placeholder: SA4 boundaries (ABS ASGS), metadata, and licensing/attribution.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Embeds (point these to your actual spec files when ready) -->
+  <script>
+    // NIM choropleth (you already have a spec – update the path if needed)
+    vegaEmbed('#nim-choropleth', 'js/nim_choropleth.json', {actions:false})
+      .catch(err => console.error('NIM embed failed:', err));
+
+    // NOM choropleth (duplicate of the NIM spec but mapped to NOM — to be created)
+    vegaEmbed('#nom-choropleth', 'js/nim_choropleth.json', {actions:false})
+      .catch(err => console.error('NOM embed failed:', err));
+
+    // Top 6 bar (toggle between NIM/NOM). For now, just load a placeholder spec.
+    // Later, wire the radio buttons to swap datasets or filter parameter in the spec.
+    let currentMetric = 'NIM';
+    const top6SpecByMetric = {
+      NIM: 'js/top6_bar_nim.json',
+      NOM: 'js/top6_bar_nom.json'
+    };
+
+    function renderTop6(metric) {
+      vegaEmbed('#top6-bar', top6SpecByMetric[metric], {actions:false})
+        .catch(err => console.error('Top 6 embed failed:', err));
+    }
+    renderTop6(currentMetric);
+
+    document.querySelectorAll('input[name="metricToggle"]').forEach(r => {
+      r.addEventListener('change', (e) => {
+        currentMetric = e.target.value;
+        renderTop6(currentMetric);
+      });
+    });
+
+    // Total migration chart (to be designed: could be bar, dot plot, ranked map, etc.)
+    vegaEmbed('#total-migration-chart', 'js/total_migration.json', {actions:false})
+      .catch(err => console.error('Total migration embed failed:', err));
+  </script>
+</body>
+</html>
