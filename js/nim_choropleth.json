@@ -14,11 +14,11 @@
       "from": {
         "data": {"url": "https://raw.githubusercontent.com/jpso0002/A2/refs/heads/main/data/sa4_migration.csv"},
         "key": "SA4_CODE21",
-        "fields": ["year","net_migration","population","SA4_NAME21"]
+        "fields": ["year","net_migration_nim","population","SA4_NAME21"]
       }
     },
     {
-      "calculate": "(datum.net_migration / datum.population) * 1000",
+      "calculate": "(datum.net_migration_nim / datum.population) * 1000",
       "as": "net_per_1000"
     }
   ],
@@ -36,7 +36,7 @@
     },
     "tooltip": [
       {"field": "properties.SA4_NAME21", "title": "Region"},
-      {"field": "net_migration", "title": "Net migration", "format": ","},
+      {"field": "net_migration_nim", "title": "Net migration", "format": ","},
       {"field": "population", "title": "Population", "format": ","},
       {"field": "net_per_1000", "title": "Per 1,000", "format": ".2f"}
     ]

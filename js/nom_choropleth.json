@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Australia Net Internal Migration per Region (per 1,000)",
+  "title": "Australia Net Overseas Migration per Region (per 1,000)",
   "width": 900,
   "height": 650,
   "projection": {"type": "mercator"},
@@ -14,11 +14,11 @@
       "from": {
         "data": {"url": "https://raw.githubusercontent.com/jpso0002/A2/refs/heads/main/data/sa4_migration.csv"},
         "key": "SA4_CODE21",
-        "fields": ["year","net_migration","population","SA4_NAME21"]
+        "fields": ["year","net_migration_nom","population","SA4_NAME21"]
       }
     },
     {
-      "calculate": "(datum.net_migration / datum.population) * 1000",
+      "calculate": "(datum.net_migration_nom / datum.population) * 1000",
       "as": "net_per_1000"
     }
   ],
@@ -27,7 +27,7 @@
     "color": {
       "field": "net_per_1000",
       "type": "quantitative",
-      "title": "Net internal migration per 1,000",
+      "title": "Net overseas migration per 1,000",
       "scale": {
         "type": "threshold",
         "domain": [-10, -5, -1, 1, 5, 10],
@@ -36,7 +36,7 @@
     },
     "tooltip": [
       {"field": "properties.SA4_NAME21", "title": "Region"},
-      {"field": "net_migration", "title": "Net migration", "format": ","},
+      {"field": "net_migration_nom", "title": "Net migration", "format": ","},
       {"field": "population", "title": "Population", "format": ","},
       {"field": "net_per_1000", "title": "Per 1,000", "format": ".2f"}
     ]

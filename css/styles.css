@@ -63,7 +63,7 @@ header p.sub { margin: 0; color: var(--ink-muted); }
 .full { width: 100%; }
 
 .chart {
-  min-height: 420px;
+  min-height: 250px;
   border: 1px dashed var(--blue-150);
   border-radius: var(--radius);
   background:
